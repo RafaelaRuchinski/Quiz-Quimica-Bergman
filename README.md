@@ -1,11 +1,16 @@
 # Quiz-Quimica-Bergman
 Trabalho de Projeto de Software II (SIS.92.2.1)
 
+
 Equipe: Luiz Henrique Bosse
+
         Juana da Silva Pedreira
+        
         Rafaela Ruchinski
 
+
 Introdução:
+
   O jogo surgiu com a necessidade de uma acadêmica do curso de Química da UFSC, em
 ensinar química orgânica de uma forma mais dinâmica. Como é um jogo educativo, ele se baseia em
 quizzes relacionados à química orgânica, focando nos hidrocarbonetos alcanos, alcenos e alcinos. O
