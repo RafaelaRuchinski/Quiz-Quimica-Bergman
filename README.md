@@ -12,6 +12,7 @@ quizzes relacionados à química orgânica, focando nos hidrocarbonetos alcanos,
 nome escolhido para o jogo foi Bergmann, em homenagem ao cientista Torbern Olof Bergman que
 foi quem fez distinção entre química orgânica e química inorgânica, separando a química em duas
 partes.
+
   A Química orgânica é parte da química que estuda os compostos do elemento carbono, os
 também chamados compostos orgânicos, que possuem propriedades características. Os
 hidrocarbonetos são compostos que ocupam um espaço importante no panorama químico orgânico.
