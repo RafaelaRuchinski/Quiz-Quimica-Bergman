@@ -4,9 +4,11 @@ Trabalho de Projeto de Software II (SIS.92.2.1)
 
 Equipe: 
 
-Luiz Henrique Bosse
-Juana da Silva Pedreira
-Rafaela Ruchinski
+Luiz Henrique Bosse;
+
+Juana da Silva Pedreira;
+
+Rafaela Ruchinski.
 
 
 Introdução:
