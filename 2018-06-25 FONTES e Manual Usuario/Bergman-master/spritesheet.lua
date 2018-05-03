@@ -324,7 +324,7 @@ SheetInfo.sheet =
         {
             -- estudant
             width=300,
-            height=1300,
+            height=1300
         },
     },
 
