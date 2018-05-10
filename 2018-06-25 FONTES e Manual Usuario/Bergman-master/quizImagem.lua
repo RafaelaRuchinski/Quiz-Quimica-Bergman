@@ -29,6 +29,8 @@ local alternativas = composer.getVariable("alternativas")
 local background
 local questionGroup
 local questionImage
+local correctX
+local correctY
 
 -- -----------------------------------------------------------------------------
 -- Métodos e escopo principal da cena
@@ -45,7 +47,12 @@ local function quizGoodAlternative(event)
 	-- Se o jogador acertar a pergunta, eu somo 0 pontos ao seu score
 	local score = composer.getVariable("score") + 50
 	composer.setVariable("score", score)
-	composer.gotoScene("game")
+
+  local opcCerta = display.newImageRect(questionGroup, "images/certo.png", 66, 66)
+  opcCerta.x = event.target.x + event.target.width - 10
+  opcCerta.y = event.target.y + 120
+
+	composer.gotoScene("game", { time=2000, effect="crossFade" })
 end
 
 local function quizBadAlternative(event)
@@ -58,9 +65,18 @@ local function quizBadAlternative(event)
 		energy = 5
 		composer.setVariable("lives", composer.getVariable("lives") - 1)
 	end
-
 	composer.setVariable("energy", energy)
-	composer.gotoScene("game")
+
+  local opcErrada = display.newImageRect(questionGroup, "images/errado.png", 66, 66)
+  opcErrada.x = event.target.x + event.target.width - 50
+  opcErrada.y = event.target.y + 150
+
+  local opcCerta = display.newImageRect(questionGroup, "images/certo.png", 66, 66)
+  opcCerta.x = correctX
+  opcCerta.y = correctY
+
+  -- Aguarda 2 segundos
+	composer.gotoScene("game", { time=2000, effect="crossFade" })
 end
 
 local function loadQuestion(backGroup)
@@ -100,6 +116,8 @@ local function loadQuestion(backGroup)
 	-- Crio os textos com as alternativas
 	local altTextResp = display.newText(questionGroup, quiz.ds_resposta, boxPositionX, boxPositionY + resPosition * boxIncrement, native.systemFont, 44)
 	altTextResp:setFillColor(color.preto.r, color.preto.g, color.preto.b)
+	correctX = 	boxPositionX
+	correctY = 	boxPositionY
 	altTextResp:addEventListener("tap", quizGoodAlternative)
 
 	local altTextErr1 = display.newText(questionGroup, alternativas[1].ds_resposta, boxPositionX, boxPositionY + ((resPosition + 1) % 4) * boxIncrement, native.systemFont, 44)
@@ -172,3 +190,4 @@ scene:addEventListener("destroy", scene)
 
 -- Retorno a cena
 return scene
+
