@@ -31,6 +31,8 @@ local questionGroup
 local alternativeImage1
 local alternativeImage2
 local alternativeImage3
+local correctX
+local correctY
 
 -- -----------------------------------------------------------------------------
 -- Métodos e escopo principal da cena
@@ -46,7 +48,12 @@ local function quizGoodAlternative(event)
 	-- Se o jogador acertar a pergunta, eu somo 0 pontos ao seu score
 	local score = composer.getVariable("score") + 50
 	composer.setVariable("score", score)
-	composer.gotoScene("game")
+
+	local opcCerta = display.newImageRect(questionGroup, "images/certo.png", 66, 66)
+	opcCerta.x = event.target.x + event.target.width -150
+	opcCerta.y = event.target.y
+
+	composer.gotoScene("game", { time=2000, effect="crossFade" })
 end
 
 local function quizBadAlternative(event)
@@ -59,9 +66,18 @@ local function quizBadAlternative(event)
 		energy = 5
 		composer.setVariable("lives", composer.getVariable("lives") - 1)
 	end
-
 	composer.setVariable("energy", energy)
-	composer.gotoScene("game")
+
+	local opcErrada = display.newImageRect(questionGroup, "images/errado.png", 66, 66)
+	opcErrada.x = event.target.x + event.target.width - 150
+	opcErrada.y = event.target.y + event.target.height + 100
+
+	local opcCerta = display.newImageRect(questionGroup, "images/certo.png", 66, 66)
+	opcCerta.x = correctX
+	opcCerta.y = correctY
+
+	-- Aguarda 2 segundos
+	composer.gotoScene("game", { time=2000, effect="crossFade" })
 end
 
 local function loadQuestion(backGroup)
@@ -104,6 +120,8 @@ local function loadQuestion(backGroup)
 	alternativeImage1.anchorY = 0
 	alternativeImage1.x = alternativeImageBackground1.x + (resPosition *  (alternativeImageBackground1.x)) + 165 - widthImg
 	alternativeImage1.y = 255
+	correctX = 	alternativeImage1.x
+	correctY = 	alternativeImage1.y
 	alternativeImage1:addEventListener("tap", quizGoodAlternative)
 
  	-- Ajusta possição da imagem
@@ -195,3 +213,4 @@ scene:addEventListener("destroy", scene)
 
 -- Retorno a cena
 return scene
+
