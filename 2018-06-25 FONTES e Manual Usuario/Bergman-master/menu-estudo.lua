@@ -39,10 +39,46 @@ local function createControl(group)
   -- Cria o botão fechar
   local btnClose = display.newImageRect(group, imgSheet, sheetInfo:getFrameIndex("btnClose"), 64, 64)
   btnClose.x = display.contentCenterX
-  btnClose.y = display.contentHeight - 100
+  btnClose.y = display.contentHeight - 90
   btnClose:addEventListener("tap", gotoMenu)
 end
 
+local function gotoIntroduction()
+  -- Cria cena da introducao
+  composer.removeScene("introducao")
+  composer.gotoScene("introducao", { time=1000, effect="crossFade" })
+end
+
+local function gotoHidrocarbonetos()
+  -- Cria cena sobre hidrocarbonetos
+  composer.removeScene("hidrocarboneto")
+  composer.gotoScene("hidrocarboneto", { time=1000, effect="crossFade" })
+end
+
+local function gotoClassificacao()
+  -- Cria cena sobre classificação de hidrocarboneto
+  composer.removeScene("classificacao")
+  composer.gotoScene("classificacao", { time=1000, effect="crossFade" })
+end
+
+
+local function gotoAlcano()
+  -- Cria cena sobre Alcanos
+  composer.removeScene("alcano")
+  composer.gotoScene("alcano", {time=1000, effect="crossFade"})
+end
+
+local function gotoAlceno()
+  -- Cria cena sobre Alcenos
+  composer.removeScene("alceno")
+  composer.gotoScene("alceno", {time=1000, effect="crossFade"})
+end
+
+local function gotoAlcino()
+  -- Cria cena sobre Alcinos
+  composer.removeScene("alcino")
+  composer.gotoScene("alcino", {time=1000, effect="crossFade"})
+end
 
 -- -----------------------------------------------------------------------------
 -- Eventos da cena
@@ -57,6 +93,30 @@ function scene:create(event)
   local background = display.newImageRect(sceneGroup, "images/backgroundMenuEstudos.png", 1280, 720)
   background.x = display.contentCenterX
   background.y = display.contentCenterY
+
+  local btnIntroduction = display.newText(sceneGroup, "Introdução", (display.contentWidth / 27) * 5.3, 260, native.systemFont, 60)
+  btnIntroduction:setFillColor(color.preto.r, color.preto.g, color.preto.b, 0.85)
+  btnIntroduction:addEventListener("tap", gotoIntroduction)
+
+  local btnHidrocarboneto = display.newText(sceneGroup, "Hidrocarboneto", (display.contentWidth / 27) * 5.3, 360, native.systemFont, 60)
+  btnHidrocarboneto:setFillColor(color.preto.r, color.preto.g, color.preto.b, 0.85)
+  btnHidrocarboneto:addEventListener("tap", gotoHidrocarbonetos)
+
+  local btnClassificacao = display.newText(sceneGroup, "Classificação", (display.contentWidth / 27) * 5.3, 460, native.systemFont, 60)
+  btnClassificacao:setFillColor(color.preto.r, color.preto.g, color.preto.b, 0.85)
+  btnClassificacao:addEventListener("tap", gotoClassificacao)
+
+  local btnAlcano = display.newText(sceneGroup, "Alcano", (display.contentWidth / 7) * 5.3, 260, native.systemFont, 60)
+  btnAlcano:setFillColor(color.preto.r, color.preto.g, color.preto.b, 0.85)
+  btnAlcano:addEventListener("tap", gotoAlcano)
+
+  local btnAlceno = display.newText(sceneGroup, "Alceno", (display.contentWidth / 7) * 5.3, 360, native.systemFont, 60)
+  btnAlceno:setFillColor(color.preto.r, color.preto.g, color.preto.b, 0.85)
+  btnAlceno:addEventListener("tap", gotoAlceno)
+
+  local btnAlcino = display.newText(sceneGroup, "Alcino", (display.contentWidth / 7) * 5.3, 460, native.systemFont, 60)
+  btnAlcino:setFillColor(color.preto.r, color.preto.g, color.preto.b, 0.85)
+  btnAlcino:addEventListener("tap", gotoAlcino)
 
   -- Crio um grupo para o shop adiciono ao grupo da cena
   gamerGroup = display.newGroup()
