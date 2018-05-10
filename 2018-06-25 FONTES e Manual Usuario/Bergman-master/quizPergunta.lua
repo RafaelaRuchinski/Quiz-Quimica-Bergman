@@ -18,7 +18,7 @@ local composer = require("composer")
 
 -- Crio uma nova cena
 local scene = composer.newScene()
-
+local sheetInfo = require("spritesheet")
 -- -----------------------------------------------------------------------------
 -- Variáveis da cena
 -- -----------------------------------------------------------------------------
@@ -32,6 +32,8 @@ local alternative1
 local alternative2
 local alternative3
 local alternative4
+local correctX
+local correctY
 
 -- -----------------------------------------------------------------------------
 -- Métodos e escopo principal da cena
@@ -44,14 +46,19 @@ local function createBackground(sceneGroup)
 end
 
 local function quizGoodAlternative(event)
-	-- Se o jogador acertar a pergunta, eu somo 0 pontos ao seu score
+	-- Se o jogador acertar a pergunta, eu somo 50 pontos ao seu score
 	local score = composer.getVariable("score") + 50
 	composer.setVariable("score", score)
-	composer.gotoScene("game")
+
+  local opcCerta = display.newImageRect(questionGroup, "images/certo.png", 66, 66)
+  opcCerta.x = event.target.x + event.target.width + 20
+  opcCerta.y = event.target.y + event.target.height
+
+	composer.gotoScene("game", { time=2000, effect="crossFade" })
 end
 
 local function quizBadAlternative(event)
-	-- Se o jogador errar a pergunta, ele perde score
+	-- Se o jogador errar a pergunta, ele perde energia e vida e mostra a resposta certa
 	local energy = composer.getVariable("energy")
 
 	if energy > 1 then
@@ -60,9 +67,18 @@ local function quizBadAlternative(event)
 		energy = 5
 		composer.setVariable("lives", composer.getVariable("lives") - 1)
 	end
-
 	composer.setVariable("energy", energy)
-	composer.gotoScene("game")
+
+  local opcErrada = display.newImageRect(questionGroup, "images/errado.png", 66, 66)
+  opcErrada.x = event.target.x + event.target.width + 20
+  opcErrada.y = event.target.y + event.target.height
+
+  local opcCerta = display.newImageRect(questionGroup, "images/certo.png", 66, 66)
+  opcCerta.x = correctX + 85
+  opcCerta.y = correctY + 60
+
+  -- Aguarda 2 segundos
+	composer.gotoScene("game", { time=2000, effect="crossFade" })
 end
 
 local function loadQuestion(backGroup)
@@ -108,7 +124,10 @@ local function loadQuestion(backGroup)
   alternativeQuestionBackground4.alpha = 0.8
 
   local option = math.random(1, 4)
+
   if option == 1 then
+    correctX = (0.5 * _WIDTH) + 50
+    correctY = (1.5 * _HEIGHT) + 50
     alternative1 = display.newText(questionGroup, quiz.ds_resposta, (0.5 * _WIDTH) + 50, (1.5 * _HEIGHT) + 50, native.systemFont, 44)
     alternative1:addEventListener("tap", quizGoodAlternative)
     alternative2 = display.newText(questionGroup, alternativas[1].ds_resposta, (1.5 * _WIDTH) + 100, (1.5 * _HEIGHT) + 50, native.systemFont, 44)
@@ -118,6 +137,8 @@ local function loadQuestion(backGroup)
     alternative4 = display.newText(questionGroup, alternativas[3].ds_resposta, (1.5 * _WIDTH) + 100, (2.5 * _HEIGHT) + 100, native.systemFont, 44)
     alternative4:addEventListener("tap", quizBadAlternative)
   elseif option == 2 then
+    correctX = (1.5 * _WIDTH) + 100
+    correctY = (1.5 * _HEIGHT) + 50
     alternative1 = display.newText(questionGroup, alternativas[1].ds_resposta, (0.5 * _WIDTH) + 50, (1.5 * _HEIGHT) + 50, native.systemFont, 44)
     alternative1:addEventListener("tap", quizBadAlternative)
     alternative2 = display.newText(questionGroup, quiz.ds_resposta, (1.5 * _WIDTH) + 100, (1.5 * _HEIGHT) + 50, native.systemFont, 44)
@@ -127,6 +148,8 @@ local function loadQuestion(backGroup)
     alternative4 = display.newText(questionGroup, alternativas[3].ds_resposta, (1.5 * _WIDTH) + 100, (2.5 * _HEIGHT) + 100, native.systemFont, 44)
     alternative4:addEventListener("tap", quizBadAlternative)
   elseif option == 3 then
+    correctX = (0.5 * _WIDTH) + 50
+    correctY = (2.5 * _HEIGHT) + 100
     alternative1 = display.newText(questionGroup, alternativas[1].ds_resposta, (0.5 * _WIDTH) + 50, (1.5 * _HEIGHT) + 50, native.systemFont, 44)
     alternative1:addEventListener("tap", quizBadAlternative)
     alternative2 = display.newText(questionGroup, alternativas[2].ds_resposta, (1.5 * _WIDTH) + 100, (1.5 * _HEIGHT) + 50, native.systemFont, 44)
@@ -136,6 +159,8 @@ local function loadQuestion(backGroup)
     alternative4 = display.newText(questionGroup, alternativas[3].ds_resposta, (1.5 * _WIDTH) + 100, (2.5 * _HEIGHT) + 100, native.systemFont, 44)
     alternative4:addEventListener("tap", quizBadAlternative)
   else
+    correctX = (1.5 * _WIDTH) + 100
+    correctY = (2.5 * _HEIGHT) + 100
     alternative1 = display.newText(questionGroup, alternativas[1].ds_resposta, (0.5 * _WIDTH) + 50, (1.5 * _HEIGHT) + 50, native.systemFont, 44)
     alternative1:addEventListener("tap", quizBadAlternative)
     alternative2 = display.newText(questionGroup, alternativas[2].ds_resposta, (1.5 * _WIDTH) + 100, (1.5 * _HEIGHT) + 50, native.systemFont, 44)
@@ -160,6 +185,8 @@ end
 function scene:create(event)
   -- Busco o grupo principal para a cena
 	local sceneGroup = self.view
+
+
 
 	-- Crio o background
 	createBackground(sceneGroup)
