@@ -6,7 +6,7 @@
 --                Juana Pedreira (juanaspedreira@gmail.com)
 --                Rafaela Ruchinski (rafaelaruchi@gmail.com)
 --  created:      2018-05-03
---  modified:     2018-05-10
+--  modified:     2018-05-12
 --  ----------------------------------------------------------------------------
 
 -- -----------------------------------------------------------------------------
@@ -34,6 +34,10 @@ local function gotoMenuEstudo()
   composer.gotoScene("menu-estudo")
 end
 
+local function gotoClassificacao2()
+  composer.gotoScene("classificacao2")
+end
+
 -- Cria o grupo de controles
 local function createControl(group)
   -- Cria o botão fechar
@@ -42,14 +46,13 @@ local function createControl(group)
   btnClose.y = display.contentHeight - 90
   btnClose:addEventListener("tap", gotoMenuEstudo)
 
-
+  local btnNext = display.newImageRect(group,"images/button-next.png", 64, 64)
+  btnNext.x = display.contentWidth - 450
+  btnNext.y = display.contentHeight - 90
+  btnNext:addEventListener("tap", gotoClassificacao2)
 
 end
---Crio o botão de next
---local btnNext = display.newImageRect(scenegroup, "button-next.png", 64, 64)
---btnNext.x = display.contentWidth - 80
---btnNext.y = display.contentHeight - 100
---btnNext:addEventListener("tap", gotoHidrocarboneto2)
+
 
 -- -----------------------------------------------------------------------------
 -- Eventos da cena
