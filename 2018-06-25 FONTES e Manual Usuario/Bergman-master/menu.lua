@@ -28,9 +28,14 @@ local sheetInfo = require("spritesheet")
 local imgShop = graphics.newImageSheet("images/shop.png", sheetInfo:getSheet())
 local imgEstudant = graphics.newImageSheet("images/estudant.png", sheetInfo:getSheet())
 
+local txtMoney
+
 -- -----------------------------------------------------------------------------
 -- Métodos e escopo principal da cena
 -- -----------------------------------------------------------------------------
+-- Seto ps parâmetros iniciais
+composer.setVariable("money", 0)
+
 local function shop()
   -- Cria cena do shop
 
@@ -95,6 +100,11 @@ function scene:create(event)
   background.x = display.contentCenterX
   background.y = display.contentCenterY
 
+  -- Crio o texto para informações sobre moedas
+  txtMoney = display.newText(sceneGroup, composer.getVariable("money"), 55, 55, native.systemFont, 44)
+  txtMoney.anchorX = 0
+  txtMoney:setFillColor(color.vermelho.r, color.vermelho.g, color.vermelho.b)
+
   -- Crio as opções do menu
   local btnPlay = display.newText(sceneGroup, "Novo Jogo", (display.contentWidth / 10) * 5.3, 270, native.systemFont, 60)
   btnPlay:setFillColor(color.preto.r, color.preto.g, color.preto.b, 0.85)
@@ -146,6 +156,11 @@ end
 -- Quando a cena é destruida
 function scene:destroy(event)
 	local sceneGroup = self.view
+end
+
+-- Atualiza os textos de pontuação, munição e vidas
+local function updateText()
+  txtMoney.text = composer.getVariable("money")
 end
 
 -- -----------------------------------------------------------------------------
