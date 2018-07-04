@@ -48,6 +48,9 @@ local function quizGoodAlternative(event)
 	local score = composer.getVariable("score") + 50
 	composer.setVariable("score", score)
 
+	local money = composer.getVariable("money") + 10
+	composer.setVariable("money", money)
+
   local opcCerta = display.newImageRect(questionGroup, "images/certo.png", 66, 66)
   opcCerta.x = event.target.x
   opcCerta.y = event.target.y
