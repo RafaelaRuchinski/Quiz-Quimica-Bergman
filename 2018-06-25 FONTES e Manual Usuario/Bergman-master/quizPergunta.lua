@@ -50,6 +50,10 @@ local function quizGoodAlternative(event)
 	local score = composer.getVariable("score") + 50
 	composer.setVariable("score", score)
 
+  -- Se o jogador acertar a pergunta, eu somo 10 pontos ao seu dinheiro
+  local money = composer.getVariable("money") + 10
+  composer.setVariable("money", money)
+	
   local opcCerta = display.newImageRect(questionGroup, "images/certo.png", 66, 66)
   opcCerta.x = event.target.x + event.target.width + 20
   opcCerta.y = event.target.y + event.target.height
