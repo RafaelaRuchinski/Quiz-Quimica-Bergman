@@ -41,11 +41,11 @@ local gamer3
 local nrGamer = 1
 local sheetInfo = require("spritesheet")
 local imgSheet = graphics.newImageSheet("images/spritesheet.png", sheetInfo:getSheet())
-local imgLives
 local imgScore
 local imgEnergy
 
 -- Textos
+local txtMoney
 local txtLives
 local txtScore
 local txtEnergy
@@ -74,6 +74,7 @@ local gamePaused = true
 -- -----------------------------------------------------------------------------
 
 -- Seto ps parâmetros iniciais
+composer.setVariable("money", 0)
 composer.setVariable("lives", 1)
 composer.setVariable("score", 0)
 composer.setVariable("energy", 1)
@@ -180,6 +181,7 @@ end
 
 -- Atualiza os textos de pontuação, munição e vidas
 local function updateText()
+  txtMoney.text = composer.getVariable("money")
   txtLives.text = composer.getVariable("lives")
   txtEnergy.text = (composer.getVariable("energy") / 5) * 100 .. "%"
   txtScore.text = adjustText(""..composer.getVariable("score"))
@@ -190,33 +192,33 @@ local function createInfo(infoGroup)
   -- determino a largura dos textos
   local textWidth = (display.contentWidth / 3) - 164
 
-  -- Crio a imagem para informação das vidas
-  imgLives = display.newImageRect(infoGroup, imgSheet, sheetInfo:getFrameIndex("lives"), sheetInfo:getWidth(sheetInfo:getFrameIndex("lives")), sheetInfo:getHeight(sheetInfo:getFrameIndex("lives")))
-  imgLives.x = 100
-  imgLives.y = 100
+  -- Crio o texto para informações sobre a pontos
+  txtMoney = display.newText(infoGroup, composer.getVariable("money"), 50, 80, native.systemFont, 44)
+  txtMoney.anchorX = 0
+  txtMoney:setFillColor(color.vermelho.r, color.vermelho.g, color.vermelho.b)
 
   -- Crio o texto para informações sobre a vidas
-  txtLives = display.newText(infoGroup, composer.getVariable("lives") , 184, 100, native.systemFont, 44)
+  txtLives = display.newText(infoGroup, composer.getVariable("lives") , 350, 80, native.systemFont, 44)
   txtLives.anchorX = 0
   txtLives:setFillColor(color.vermelho.r, color.vermelho.g, color.vermelho.b)
 
   -- Crio a imagem para informação da munição
   imgEnergy = display.newImageRect(infoGroup, imgSheet, sheetInfo:getFrameIndex("energy"), sheetInfo:getWidth(sheetInfo:getFrameIndex("energy")), sheetInfo:getHeight(sheetInfo:getFrameIndex("energy")))
-  imgEnergy.x = 204 + textWidth
-  imgEnergy.y = 100
+  imgEnergy.x = 404 + textWidth
+  imgEnergy.y = 76
 
   -- Crio o texto para informações sobre a munições
-  txtEnergy = display.newText(infoGroup, (composer.getVariable("energy") / 5) * 100 .. "%" , 288 + textWidth, 100, native.systemFont, 44)
+  txtEnergy = display.newText(infoGroup, (composer.getVariable("energy") / 5) * 100 .. "%" , 268 + textWidth, 80, native.systemFont, 44)
   txtEnergy.anchorX = 0
   txtEnergy:setFillColor(color.vermelho.r, color.vermelho.g, color.vermelho.b)
 
   -- Crio a imagem para informação dos pontos
   imgScore = display.newImageRect(infoGroup, imgSheet, sheetInfo:getFrameIndex("score"), sheetInfo:getWidth(sheetInfo:getFrameIndex("score")), sheetInfo:getHeight(sheetInfo:getFrameIndex("score")))
-  imgScore.x = 308 + (2 * textWidth)
-  imgScore.y = 100
+  imgScore.x = 438 + (2 * textWidth)
+  imgScore.y = 80
 
   -- Crio o texto para informações sobre a pontos
-  txtScore = display.newText(infoGroup, composer.getVariable("score"), 392 + (2 * textWidth), 100, native.systemFont, 44)
+  txtScore = display.newText(infoGroup, composer.getVariable("score"), 492 + (2 * textWidth), 80, native.systemFont, 44)
   txtScore.anchorX = 0
   txtScore:setFillColor(color.vermelho.r, color.vermelho.g, color.vermelho.b)
 end
@@ -348,6 +350,9 @@ local function gameLoop()
 end
 
 local function gameOver()
+
+  composer.setVariable("money", txtMoney.text)
+
   -- Manda para a proxima cena a pontuaçao total
 	composer.setVariable("score", txtScore.text)
 
