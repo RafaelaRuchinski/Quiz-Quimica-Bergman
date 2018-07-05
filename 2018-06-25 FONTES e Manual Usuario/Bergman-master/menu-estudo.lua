@@ -6,7 +6,7 @@
 --                Juana Pedreira (juanaspedreira@gmail.com)
 --                Rafaela Ruchinski (rafaelaruchi@gmail.com)
 --  created:      2016-09-24
---  modified:     2018-03-08
+--  modified:     2018-07-02
 --  ----------------------------------------------------------------------------
 
 -- -----------------------------------------------------------------------------
@@ -80,6 +80,12 @@ local function gotoAlcino()
   composer.gotoScene("alcino", {time=1000, effect="crossFade"})
 end
 
+local function gotoReferencia()
+  -- Cria cena sobre Referências
+  composer.removeScene("referencia")
+  composer.gotoScene("referencia", {time=1000, effect="crossFade"})
+end
+
 -- -----------------------------------------------------------------------------
 -- Eventos da cena
 -- -----------------------------------------------------------------------------
@@ -117,6 +123,10 @@ function scene:create(event)
   local btnAlcino = display.newText(sceneGroup, "Alcino", (display.contentWidth / 7) * 5.3, 460, native.systemFont, 60)
   btnAlcino:setFillColor(color.preto.r, color.preto.g, color.preto.b, 0.85)
   btnAlcino:addEventListener("tap", gotoAlcino)
+
+  local btnReferencia = display.newText(sceneGroup, "Referência", (display.contentWidth / 7) * 5.3, 640, native.systemFont, 60)
+  btnReferencia:setFillColor(color.preto.r, color.preto.g, color.preto.b, 0.65)
+  btnReferencia:addEventListener("tap", gotoReferencia)
 
   -- Crio um grupo para o shop adiciono ao grupo da cena
   gamerGroup = display.newGroup()
