@@ -6,7 +6,7 @@
 --                Juana Pedreira (juanaspedreira@gmail.com)
 --                Rafaela Ruchinski (rafaelaruchi@gmail.com)
 --  created:      2016-09-24
---  modified:     2018-03-08
+--  modified:     2018-07-05
 --  ----------------------------------------------------------------------------
 
 -- -----------------------------------------------------------------------------
@@ -69,6 +69,18 @@ local function createButtonInformation(group)
   btnEstudantText:addEventListener("tap", gotoEstudant)
 end
 
+local function gotoConquista()
+  composer.gotoScene("conquista", {time=1000, effect="crossFade"})
+end
+
+local function createButtonConquista(group)
+  -- Cria o botão do shop
+  local btnConquista = display.newImageRect(group, "images/conquistas.png", 100, 100)
+  btnConquista.x = display.contentWidth - 1000
+  btnConquista.y = display.contentHeight - 80
+  btnConquista:addEventListener("tap", gotoConquista)
+end
+
 -- Leva o usuário até a cena do Jogo
 local function gotoGame()
   composer.removeScene("game")
@@ -127,6 +139,9 @@ function scene:create(event)
 
   -- Cria botão de estudos
   createButtonInformation(gamerGroup)
+	
+  -- Cria botão de conquista
+  createButtonConquista(gamerGroup)
 end
 
 -- Quando a cena está pronta para ser mostrada (phase will) e quando é mostrada (phase did).
